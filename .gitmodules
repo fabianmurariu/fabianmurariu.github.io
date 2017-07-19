@@ -1,0 +1,6 @@
+[submodule "wip/themes/minimal"]
+	path = wip/themes/minimal
+	url = https://github.com/calintat/minimal.git
+[submodule "wip/themes/mainroad"]
+	path = wip/themes/mainroad
+	url = https://github.com/vimux/mainroad
