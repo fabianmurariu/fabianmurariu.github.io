@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Icons"
+   viewBox="0 0 58 58"
+   version="1.1"
+   sodipodi:docname="robot2.svg"
+   width="58"
+   height="58"
+   inkscape:version="0.92.4 (33fec40, 2019-01-16)">
+  <metadata
+     id="metadata3873">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2037"
+     id="namedview3871"
+     showgrid="false"
+     inkscape:zoom="37.583333"
+     inkscape:cx="17.973392"
+     inkscape:cy="40.225602"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Icons" />
+  <defs
+     id="defs3823">
+    <style
+       id="style3821">.cls-1{fill:#ff8a14;}.cls-2{fill:#adc4d9;}.cls-2,.cls-5,.cls-7,.cls-8,.cls-9{stroke:#45413c;stroke-linecap:round;stroke-linejoin:round;}.cls-3{fill:#ffe500;}.cls-4{fill:#fff48c;}.cls-5{fill:none;}.cls-13,.cls-6{fill:#45413c;}.cls-6{opacity:0.15;}.cls-7{fill:#fff;}.cls-8{fill:#ff6242;}.cls-9{fill:#6dd627;}.cls-10{fill:#ffaa54;}.cls-11{fill:#c0dceb;}.cls-12{fill:#daedf7;}</style>
+  </defs>
+  <path
+     class="cls-1"
+     d="M 2.34,49 A 4.06,4.06 0 0 1 1.16,43.4 l 7.47,4.86 A 4.05,4.05 0 0 1 3,49.45 Z"
+     data-name="&lt;Path&gt;"
+     id="_Path_"
+     inkscape:connector-curvature="0"
+     style="fill:#ff8a14" />
+  <path
+     class="cls-2"
+     d="m 33.5,27 h -9 l 0.58,-2.38 A 1.46,1.46 0 0 1 26.5,23.5 h 5 a 1.47,1.47 0 0 1 1.42,1.11 z"
+     data-name="&lt;Path&gt;"
+     id="_Path_2"
+     inkscape:connector-curvature="0"
+     style="fill:#adc4d9;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     class="cls-3"
+     d="M 29,26 A 14.5,14.5 0 0 0 14.5,40.5 V 51 A 3.5,3.5 0 0 0 18,54.5 H 40 A 3.5,3.5 0 0 0 43.5,51 V 40.5 A 14.5,14.5 0 0 0 29,26 Z"
+     id="path3829"
+     inkscape:connector-curvature="0"
+     style="fill:#ffe500" />
+  <path
+     class="cls-4"
+     d="M 29,26 A 14.5,14.5 0 0 0 14.5,40.5 v 4 a 14.5,14.5 0 0 1 29,0 v -4 A 14.5,14.5 0 0 0 29,26 Z"
+     id="path3831"
+     inkscape:connector-curvature="0"
+     style="fill:#fff48c" />
+  <path
+     class="cls-5"
+     d="M 29,26 A 14.5,14.5 0 0 0 14.5,40.5 V 51 A 3.5,3.5 0 0 0 18,54.5 H 40 A 3.5,3.5 0 0 0 43.5,51 V 40.5 A 14.5,14.5 0 0 0 29,26 Z"
+     id="path3833"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <ellipse
+     class="cls-6"
+     cx="29"
+     cy="56.5"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_"
+     rx="16.5"
+     ry="1.5"
+     style="opacity:0.15;fill:#45413c" />
+  <circle
+     class="cls-7"
+     cx="35.889999"
+     cy="39.080002"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_2"
+     r="4.46"
+     style="fill:#ffffff;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <circle
+     class="cls-8"
+     cx="35.889999"
+     cy="39.080002"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_3"
+     r="1.62"
+     style="fill:#ff6242;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <circle
+     class="cls-7"
+     cx="22.110001"
+     cy="39.080002"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_4"
+     r="4.0500002"
+     style="fill:#ffffff;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <circle
+     class="cls-9"
+     cx="22.110001"
+     cy="39.080002"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_5"
+     r="1.62"
+     style="fill:#6dd627;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_"
+     x1="29"
+     x2="29"
+     y1="26"
+     y2="48"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_2"
+     x1="35.889999"
+     x2="35.889999"
+     y1="36.25"
+     y2="34.620003"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_3"
+     x1="37.900002"
+     x2="39.040001"
+     y1="37.080002"
+     y2="35.93"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_4"
+     x1="38.73"
+     x2="40.349998"
+     y1="39.080002"
+     y2="39.080002"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_5"
+     x1="37.900002"
+     x2="39.040001"
+     y1="41.09"
+     y2="42.240002"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_6"
+     x1="35.889999"
+     x2="35.889999"
+     y1="41.919998"
+     y2="43.540001"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_7"
+     x1="33.880001"
+     x2="32.740002"
+     y1="41.09"
+     y2="42.240002"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_8"
+     x1="33.049999"
+     x2="31.43"
+     y1="39.080002"
+     y2="39.080002"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <line
+     class="cls-5"
+     data-name="&lt;Line&gt;"
+     id="_Line_9"
+     x1="33.880001"
+     x2="32.740002"
+     y1="37.080002"
+     y2="35.93"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <polyline
+     class="cls-5"
+     data-name="&lt;Path&gt;"
+     id="_Path_3"
+     points="29 13.5 29 11.5 33.5 10 28 5 36 7 38.03 2.53"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round"
+     transform="translate(0,10)" />
+  <circle
+     class="cls-8"
+     cx="38.029999"
+     cy="12.53"
+     data-name="&lt;Ellipse&gt;"
+     id="_Ellipse_6"
+     r="2.03"
+     style="fill:#ff6242;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     class="cls-5"
+     d="m 14.5,46.38 c 0,0 -0.5,-5.27 -2.93,-4.87 -2.88,0.49 -2,7.71 0.41,7.3 2,-0.34 -1.62,-6.89 -4.46,-6.08 C 5.93,43.19 5.1,45.25 5,45.92"
+     data-name="&lt;Path&gt;"
+     id="_Path_4"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     class="cls-10"
+     d="m 1.08,43.55 a 4.76,4.76 0 0 0 2.26,4 l 0.77,0.5 A 4.81,4.81 0 0 0 8.37,48.62 2,2 0 0 0 8.63,48.3 L 1.16,43.4 a 1.09,1.09 0 0 0 -0.08,0.15 z"
+     data-name="&lt;Path&gt;"
+     id="_Path_5"
+     inkscape:connector-curvature="0"
+     style="fill:#ffaa54" />
+  <path
+     class="cls-5"
+     d="M 2.34,49 A 4.06,4.06 0 0 1 1.16,43.4 l 7.47,4.86 A 4.05,4.05 0 0 1 3,49.45 Z"
+     data-name="&lt;Path&gt;"
+     id="_Path_6"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     class="cls-1"
+     d="m 47.5,45.5 a 4,4 0 0 1 -4,4 v -9 a 4,4 0 0 1 4,4 z"
+     id="path3854"
+     inkscape:connector-curvature="0"
+     style="fill:#ff8a14" />
+  <path
+     class="cls-10"
+     d="m 43.5,40.5 v 2 a 4,4 0 0 1 4,3.5 4.07,4.07 0 0 0 0,-0.5 v -1 a 4,4 0 0 0 -4,-4 z"
+     id="path3856"
+     inkscape:connector-curvature="0"
+     style="fill:#ffaa54" />
+  <path
+     class="cls-5"
+     d="m 47.5,45.5 a 4,4 0 0 1 -4,4 v -9 a 4,4 0 0 1 4,4 z"
+     id="path3858"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <rect
+     class="cls-11"
+     height="8"
+     rx="1.5"
+     ry="1.5"
+     width="21"
+     x="18.5"
+     y="48"
+     id="rect3860"
+     style="fill:#c0dceb" />
+  <path
+     class="cls-12"
+     d="M 38,48 H 20 a 1.5,1.5 0 0 0 -1.5,1.5 v 2 A 1.5,1.5 0 0 1 20,50 h 18 a 1.5,1.5 0 0 1 1.5,1.5 v -2 A 1.5,1.5 0 0 0 38,48 Z"
+     id="path3862"
+     inkscape:connector-curvature="0"
+     style="fill:#daedf7" />
+  <rect
+     class="cls-5"
+     height="8"
+     rx="1.5"
+     ry="1.5"
+     width="21"
+     x="18.5"
+     y="48"
+     id="rect3864"
+     style="fill:none;stroke:#45413c;stroke-linecap:round;stroke-linejoin:round" />
+  <path
+     class="cls-13"
+     d="M 20.5,49.5 A 0.5,0.5 0 1 0 21,50 0.5,0.5 0 0 0 20.5,49.5 Z"
+     id="path3866"
+     inkscape:connector-curvature="0"
+     style="fill:#45413c" />
+  <path
+     class="cls-13"
+     d="M 37.5,49.5 A 0.5,0.5 0 1 0 38,50 0.5,0.5 0 0 0 37.5,49.5 Z"
+     id="path3868"
+     inkscape:connector-curvature="0"
+     style="fill:#45413c" />
+</svg>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Insert coin</title>
+    <link>http://www.example.com/</link>
+    <description>Recent content on Insert coin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 03 Jun 2019 00:00:00 +0100</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://www.example.com/about/</link>
+      <pubDate>Sun, 02 Jun 2019 17:37:56 +0100</pubDate>
+      
+      <guid>http://www.example.com/about/</guid>
+      <description>I&amp;rsquo;m a software developer for hire, sometimes refered to as a contractor. I specialize in big data but will happily work on microservices. I don&amp;rsquo;t do UI and unless you use re-frame you shouldn&amp;rsquo;t either.
+Currently I&amp;rsquo;m fighting financial crime @ Quantexa
+This blog is written in emacs + ox-hugo</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>http://www.example.com/contact/</link>
+      <pubDate>Sun, 02 Jun 2019 17:41:04 +0100</pubDate>
+      
+      <guid>http://www.example.com/contact/</guid>
+      <description>@coincodebot</description>
+    </item>
+    
+    <item>
+      <title>Index Common Crawl with Elasticsearch without a running cluster</title>
+      <link>http://www.example.com/posts/offline-cc-index-spark-elastic/</link>
+      <pubDate>Mon, 03 Jun 2019 00:00:00 +0100</pubDate>
+      
+      <guid>http://www.example.com/posts/offline-cc-index-spark-elastic/</guid>
+      <description>Common Crawl is an amazing project I&amp;rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&amp;rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
+The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page.</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>http://www.example.com/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.example.com/projects/</guid>
+      <description>Nothing to see here&amp;hellip; Move along!</description>
+    </item>
+    
+  </channel>
+</rss>
