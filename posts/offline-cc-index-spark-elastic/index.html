@@ -1,256 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="author" content="coincodebot">
-    <meta name="description" content="John Doe&#39;s personal website">
-    <meta name="keywords" content="blog,developer,personal">
-
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Index Common Crawl with Elasticsearch without a running cluster"/>
-<meta name="twitter:description" content="Common Crawl is an amazing project I&rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
-The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page."/>
-
-    <meta property="og:title" content="Index Common Crawl with Elasticsearch without a running cluster" />
-<meta property="og:description" content="Common Crawl is an amazing project I&rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
-The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/" />
-<meta property="article:published_time" content="2019-06-03T00:00:00&#43;01:00"/>
-<meta property="article:modified_time" content="2019-06-05T20:39:53&#43;01:00"/>
-
-
-    
-      <base href="https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/">
-    
-    <title>
-  Index Common Crawl with Elasticsearch without a running cluster · Insert coin
-</title>
-
-    
-      <link rel="canonical" href="https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/">
-    
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
-
-    
-      
-      
-      <link rel="stylesheet" href="https://fabianmurariu.github.io/css/coder.min.28d751104f30c16da1aa1bb04015cbe662cacfe0d1b01af4f2240ad58580069c.css" integrity="sha256-KNdREE8wwW2hqhuwQBXL5mLKz&#43;DRsBr08iQK1YWABpw=" crossorigin="anonymous" media="screen" />
-    
-
-    
-
-    
-
-    
-      <link rel="stylesheet" href="https://fabianmurariu.github.io/css/robot.css" />
-    
-
-    
-    
-    <link rel="icon" type="image/png" href="https://fabianmurariu.github.io/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://fabianmurariu.github.io/images/favicon-16x16.png" sizes="16x16">
-
-    <meta name="generator" content="Hugo 0.55.4" />
-  </head>
-
-  <body class=" ">
-    <main class="wrapper">
-      <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="https://fabianmurariu.github.io">
-      Insert coin
-    </a>
-    <input type="checkbox" id="menu-toggle" />
-    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
-    <ul class="navigation-list">
-      
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://fabianmurariu.github.io/about/">About</a>
-          </li>
-        
-          <li class="navigation-item">
-            <a class="navigation-link" href="https://fabianmurariu.github.io/posts/">Blog</a>
-          </li>
-        
-      
-      
-    </ul>
-  </section>
-</nav>
-
-
-      <div class="content">
-        
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">Index Common Crawl with Elasticsearch without a running cluster</h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fas fa-calendar"></i>
-              <time datetime='2019-06-03T00:00:00&#43;01:00'>
-                2019-06-03
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fas fa-clock"></i>
-              9 minutes read
-            </span>
-          </div>
-          <div class="categories">
-  <i class="fas fa-folder"></i>
-    <a href="https://fabianmurariu.github.io/categories/spark/">spark</a></div>
-
-          <div class="tags">
-  <i class="fas fa-tag"></i>
-    <a href="https://fabianmurariu.github.io/tags/elasticsearch/">elasticsearch</a>
-      <span class="separator">•</span>
-    <a href="https://fabianmurariu.github.io/tags/spark/">spark</a></div>
-
-        </div>
-      </header>
-
-      <div>
-        
-
-<h2 id="common-crawl-is-an-amazing-project">Common Crawl is an amazing project</h2>
-
-<p>I&rsquo;m always surprised when people I talk to are unfamiliar with <a href="http://commoncrawl.org/">Common Crawl</a>, it&rsquo;s one of the
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content=coincodebot><meta name=description content="coder for hire, drummer"><meta name=keywords content=blog,developer,personal><meta name=twitter:card content=summary><meta name=twitter:title content="Index Common Crawl with Elasticsearch without a running cluster"><meta name=twitter:description content="Common Crawl is an amazing project I&rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
+The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page."><meta property=og:title content="Index Common Crawl with Elasticsearch without a running cluster"><meta property=og:description content="Common Crawl is an amazing project I&rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
+The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page."><meta property=og:type content=article><meta property=og:url content=https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/><meta property=article:published_time content=2019-06-03T00:00:00&#43;01:00><meta property=article:modified_time content=2019-06-05T20:39:53&#43;01:00><base href=https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/><title>Index Common Crawl with Elasticsearch without a running cluster · Insert coin</title><link rel=canonical href=https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.8.1/css/all.css integrity=sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin=anonymous><link rel=stylesheet href=https://fabianmurariu.github.io/css/coder.min.28d751104f30c16da1aa1bb04015cbe662cacfe0d1b01af4f2240ad58580069c.css integrity="sha256-KNdREE8wwW2hqhuwQBXL5mLKz&#43;DRsBr08iQK1YWABpw=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://fabianmurariu.github.io/css/robot.css><link rel=icon type=image/png href=https://fabianmurariu.github.io/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=https://fabianmurariu.github.io/images/favicon-16x16.png sizes=16x16><meta name=generator content="Hugo 0.55.4"></head><body><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://fabianmurariu.github.io>Insert coin</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=https://fabianmurariu.github.io/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://fabianmurariu.github.io/posts/>Blog</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title>Index Common Crawl with Elasticsearch without a running cluster</h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fas fa-calendar"></i><time datetime=2019-06-03T00:00:00&#43;01:00>2019-06-03</time></span>
+<span class=reading-time><i class="fas fa-clock"></i>9 minutes read</span></div><div class=categories><i class="fas fa-folder"></i><a href=https://fabianmurariu.github.io/categories/spark/>spark</a></div><div class=tags><i class="fas fa-tag"></i><a href=https://fabianmurariu.github.io/tags/elasticsearch/>elasticsearch</a>
+<span class=separator>•</span>
+<a href=https://fabianmurariu.github.io/tags/spark/>spark</a></div></div></header><div><h2 id=common-crawl-is-an-amazing-project>Common Crawl is an amazing project</h2><p>I&rsquo;m always surprised when people I talk to are unfamiliar with <a href=http://commoncrawl.org/>Common Crawl</a>, it&rsquo;s one of the
 most surprising and empowering projects in a world where governments and
-corporations seem hell bent on taking power away from us.</p>
-
-<p>The projects is host to 8 year of web data grouped in 3 main categories: <strong>raw web page</strong>, <strong>metadata
+corporations seem hell bent on taking power away from us.</p><p>The projects is host to 8 year of web data grouped in 3 main categories: <strong>raw web page</strong>, <strong>metadata
 extracts</strong> and <strong>text extracts</strong> with derivative work such as a file index as well as
-a <a href="http://commoncrawl.org/2017/05/hostgraph-2017-feb-mar-apr-crawls/">link graph</a> with ranking for top domains and every page.</p>
-
-<p>There are a ton of <a href="http://commoncrawl.org/the-data/examples/">examples</a> on how to process WARC files, most of them center
+a <a href=http://commoncrawl.org/2017/05/hostgraph-2017-feb-mar-apr-crawls/>link graph</a> with ranking for top domains and every page.</p><p>There are a ton of <a href=http://commoncrawl.org/the-data/examples/>examples</a> on how to process WARC files, most of them center
 around Python and Java with a good mixture of Scala, Clojure, Rust and surprisingly
 Ruby. Given the petabytes available you usually need a hefty Hadoop cluster to process one
-month&rsquo;s <a href="http://commoncrawl.org/2019/04/april-2019-crawl-archive-now-available/">2.5 billion or 198 TiB</a> data dump consisting of WARC, WAT, WET files as
-well as a <a href="http://commoncrawl.org/2018/03/index-to-warc-files-and-urls-in-columnar-format/">parquet index</a> with limited metadata about every website indexed.</p>
-
-<h2 id="warc-wet-wat-what">warc, wet, wat, WHAT?</h2>
-
-<p>There are 3 main kind of files produced each month all of them in the <a href="https://en.wikipedia.org/wiki/Web%5FARChive">Web
+month&rsquo;s <a href=http://commoncrawl.org/2019/04/april-2019-crawl-archive-now-available/>2.5 billion or 198 TiB</a> data dump consisting of WARC, WAT, WET files as
+well as a <a href=http://commoncrawl.org/2018/03/index-to-warc-files-and-urls-in-columnar-format/>parquet index</a> with limited metadata about every website indexed.</p><h2 id=warc-wet-wat-what>warc, wet, wat, WHAT?</h2><p>There are 3 main kind of files produced each month all of them in the <a href=https://en.wikipedia.org/wiki/Web%5FARChive>Web
 ARChive</a> format, there are plenty of libraries that can extract data from it in
 all the languages mentioned above. Evidently the data is compressed as well as
-broken down into segments, a path to one of the <strong>warc</strong> files looks like</p>
-
-<blockquote>
-<p>s3://commoncrawl/crawl-data/CC-MAIN-2019-04/segments/1547583659944.3/warc/CC-MAIN-20190118070121-20190118092121-00160.warc.gz</p>
-</blockquote>
-
-<p>with the date, segment (partition) visible. You can access it for free if you
-have a AWS account, they are stored in us-east-1.</p>
-
-<table>
-<thead>
-<tr>
-<th>file type</th>
-<th>stores</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>WARC</td>
-<td>everything, crawl info, response headers, html metadata, content</td>
-</tr>
-
-<tr>
-<td>WAT</td>
-<td>carwl info, response headers, html metadata</td>
-</tr>
-
-<tr>
-<td>WET</td>
-<td>text content only with all html tags removed</td>
-</tr>
-</tbody>
-</table>
-
-<p>Since actual examples are worth a thousand words here is an <a href="https://gist.github.com/Smerity/e750f0ef0ab9aa366558#file-bbc-wet">example from BBC</a>
-with content of every kind.</p>
-
-<h2 id="elasticsearch-is-a-complex-beast">Elasticsearch is a complex beast</h2>
-
-<p>I rarely encounter someone unaware of Elasticsearch, even if they don&rsquo;t work in
-the tech industry the latest <a href="https://www.theregister.co.uk/2019/03/12/aws%5Felasticsearch%5Fdistro/">controversy</a> made waves outside our bubble. Here is
-how Elastic (the company) describes Elasticsearch (the product)</p>
-
-<blockquote>
-<p>Elasticsearch is a distributed, RESTful search and analytics engine capable of
+broken down into segments, a path to one of the <strong>warc</strong> files looks like</p><blockquote><p>s3://commoncrawl/crawl-data/CC-MAIN-2019-04/segments/1547583659944.3/warc/CC-MAIN-20190118070121-20190118092121-00160.warc.gz</p></blockquote><p>with the date, segment (partition) visible. You can access it for free if you
+have a AWS account, they are stored in us-east-1.</p><table><thead><tr><th>file type</th><th>stores</th></tr></thead><tbody><tr><td>WARC</td><td>everything, crawl info, response headers, html metadata, content</td></tr><tr><td>WAT</td><td>carwl info, response headers, html metadata</td></tr><tr><td>WET</td><td>text content only with all html tags removed</td></tr></tbody></table><p>Since actual examples are worth a thousand words here is an <a href=https://gist.github.com/Smerity/e750f0ef0ab9aa366558#file-bbc-wet>example from BBC</a>
+with content of every kind.</p><h2 id=elasticsearch-is-a-complex-beast>Elasticsearch is a complex beast</h2><p>I rarely encounter someone unaware of Elasticsearch, even if they don&rsquo;t work in
+the tech industry the latest <a href=https://www.theregister.co.uk/2019/03/12/aws%5Felasticsearch%5Fdistro/>controversy</a> made waves outside our bubble. Here is
+how Elastic (the company) describes Elasticsearch (the product)</p><blockquote><p>Elasticsearch is a distributed, RESTful search and analytics engine capable of
 solving a growing number of use cases. As the heart of the Elastic Stack, it
 centrally stores your data so you can discover the expected and uncover the
-unexpected.</p>
-</blockquote>
-
-<p><a href="https://www.elastic.co/products/elasticsearch">That</a> is a fancy way of saying we built a distributed system with all the
+unexpected.</p></blockquote><p><a href=https://www.elastic.co/products/elasticsearch>That</a> is a fancy way of saying we built a distributed system with all the
 nuts and bolts one might expect on top of the lucene index library so you don&rsquo;t
-have to.</p>
-
-<p>If at this point you&rsquo;re not familiar with Elasticsearch then don&rsquo;t bother
+have to.</p><p>If at this point you&rsquo;re not familiar with Elasticsearch then don&rsquo;t bother
 reading further, close the tab or go back. Hacky version of data loading that
 involve carefully tricking ES into indexing in the same place where spark
 executors run is not for the fainth of heart. In my previous conversations with
 Elastic they have been reluctant to support this method so if you really need
-that you&rsquo;re a bit out of luck.</p>
+that you&rsquo;re a bit out of luck.</p><h2 id=elasticsearch-and-apache-spark>Elasticsearch and Apache Spark</h2><p>Apache Spark is the prime candidate to process the huge amount of data available
+in any of the Common Crawl monthly crawls. Elastic even provides easy <a href=https://www.elastic.co/guide/en/elasticsearch/hadoop/current/spark.html>tooling</a>
+allowing you to lift any dataframe into an available Elasticsearch cluster.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> org.apache.spark.sql.SQLContext
+<span style=color:#66d9ef>import</span> org.apache.spark.sql.SQLContext._
 
-<h2 id="elasticsearch-and-apache-spark">Elasticsearch and Apache Spark</h2>
+<span style=color:#66d9ef>import</span> org.elasticsearch.spark.sql._
 
-<p>Apache Spark is the prime candidate to process the huge amount of data available
-in any of the Common Crawl monthly crawls. Elastic even provides easy <a href="https://www.elastic.co/guide/en/elasticsearch/hadoop/current/spark.html">tooling</a>
-allowing you to lift any dataframe into an available Elasticsearch cluster.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> org.apache.spark.sql.SQLContext
-<span style="color:#66d9ef">import</span> org.apache.spark.sql.SQLContext._
+<span style=color:#f92672>...</span>
 
-<span style="color:#66d9ef">import</span> org.elasticsearch.spark.sql._
+<span style=color:#75715e>// spark = existing SparkSession
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>// case class used to define the DataFrame
+</span><span style=color:#75715e></span><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> surname<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> age<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Int</span><span style=color:#f92672>)</span>
 
-<span style="color:#f92672">...</span>
+<span style=color:#75715e>//  create DataFrame
+</span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> people <span style=color:#66d9ef>=</span> spark<span style=color:#f92672>.</span>read<span style=color:#f92672>.</span>textFile<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;people.txt&#34;</span><span style=color:#f92672>)</span>
+        <span style=color:#f92672>.</span>map<span style=color:#f92672>(</span><span style=color:#66d9ef>_</span><span style=color:#f92672>.</span>split<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;,&#34;</span><span style=color:#f92672>))</span>
+        <span style=color:#f92672>.</span>map<span style=color:#f92672>(</span>p <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Person</span><span style=color:#f92672>(</span>p<span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>),</span> p<span style=color:#f92672>(</span><span style=color:#ae81ff>1</span><span style=color:#f92672>),</span> p<span style=color:#f92672>(</span><span style=color:#ae81ff>2</span><span style=color:#f92672>).</span>trim<span style=color:#f92672>.</span>toInt<span style=color:#f92672>))</span>
+        <span style=color:#f92672>.</span>toDF<span style=color:#f92672>()</span>
 
-<span style="color:#75715e">// spark = existing SparkSession
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// case class used to define the DataFrame
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> surname<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> age<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Int</span><span style="color:#f92672">)</span>
-
-<span style="color:#75715e">//  create DataFrame
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> people <span style="color:#66d9ef">=</span> spark<span style="color:#f92672">.</span>read<span style="color:#f92672">.</span>textFile<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;people.txt&#34;</span><span style="color:#f92672">)</span>
-        <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>split<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;,&#34;</span><span style="color:#f92672">))</span>
-        <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>p <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>p<span style="color:#f92672">(</span><span style="color:#ae81ff">0</span><span style="color:#f92672">),</span> p<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">),</span> p<span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">).</span>trim<span style="color:#f92672">.</span>toInt<span style="color:#f92672">))</span>
-        <span style="color:#f92672">.</span>toDF<span style="color:#f92672">()</span>
-
-people<span style="color:#f92672">.</span>saveToEs<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;spark/people&#34;</span><span style="color:#f92672">)</span></code></pre></div>
-<p>If you&rsquo;ve got this far and the above works out as per your requirements you then don&rsquo;t read any
+people<span style=color:#f92672>.</span>saveToEs<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;spark/people&#34;</span><span style=color:#f92672>)</span></code></pre></div><p>If you&rsquo;ve got this far and the above works out as per your requirements you then don&rsquo;t read any
 further. You&rsquo;ve probably setup an Elasticsearch cluster and spent the time to
 tune it for both indexing and searching. You&rsquo;ve got the number of shards setup
-just right and basically wasted a few minutes reading things you already knew.</p>
-
-<h2 id="locality-locality-locality">Locality Locality Locality</h2>
-
-<p>The way regular indexing from Apache Spark into Elasticsearch works is by
+just right and basically wasted a few minutes reading things you already knew.</p><h2 id=locality-locality-locality>Locality Locality Locality</h2><p>The way regular indexing from Apache Spark into Elasticsearch works is by
 sending requests from every executor as they process each partition of the
 Dataset into a separate Elasticsearch cluster.
 The Hadoop cluster where Spark runs and
 Elasticsearch cluster where documents are indexed will differ in size and setup.
 But you will need to tune Elastic for read heavy workloads as well as indexing
-and this part is not easy.</p>
-
-<p>The penalty for moving data over the network is acceptable in a lot of cases
+and this part is not easy.</p><p>The penalty for moving data over the network is acceptable in a lot of cases
 however once the data gets into TB ranges time index time grows from hours to
-days to weeks.</p>
-
-<p>One option explored here is starting an embedded Elasticsearch node per Task
+days to weeks.</p><p>One option explored here is starting an embedded Elasticsearch node per Task
 attempt <strong>elastic_local_node_2_0</strong> representing the local node serving Task 2 attempt
 0 and direct all indexing requests to the local node. The key is that all
 indices must be created with the same number of shards as Dataset partitions and
@@ -259,224 +70,99 @@ single most important factor that avoids going over the network into a live
 separate Elasticsearch cluster and keeps processing and data local. The code in
 the footnote still makes requests over HTTP instead of simply passing down
 objects but it&rsquo;s a vast improvement that avoids sending youre entire dataset
-over the wire.</p>
-
-<p>The way to successfully trick Elasticsearch is to use routing key to be the same
+over the wire.</p><p>The way to successfully trick Elasticsearch is to use routing key to be the same
 constant string when indexing. This tells the local ES instance that the index
 has, say 128, partitions but we only write in one single partition. We do that
 with every spark dataframe partition and thus have 128 shards each located where
-the dataframe partition resides.</p>
-
-<p>The idea is a hack, nevertheless one that can save days in indexing speed. Here
+the dataframe partition resides.</p><p>The idea is a hack, nevertheless one that can save days in indexing speed. Here
 is a table attempting to illustrate how one index named <strong>docs</strong> is laid on top of spark
-partitions.</p>
-
-<table>
-<thead>
-<tr>
-<th>partition/shard</th>
-<th>shard 1</th>
-<th>shard 2</th>
-<th>shard 3</th>
-<th>Final Index on HDFS or S3</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>partition 1</td>
-<td><strong>3645 docs</strong></td>
-<td></td>
-<td></td>
-<td><strong>3645 docs</strong></td>
-</tr>
-
-<tr>
-<td>partition 2</td>
-<td></td>
-<td><strong>3507 docs</strong></td>
-<td></td>
-<td><strong>3507 docs</strong></td>
-</tr>
-
-<tr>
-<td>partition 3</td>
-<td></td>
-<td></td>
-<td><strong>3783 docs</strong></td>
-<td><strong>3783 docs</strong></td>
-</tr>
-</tbody>
-</table>
-
-<p>Doing this manually turns out to be a lot harder than it needs to be for a
+partitions.</p><table><thead><tr><th>partition/shard</th><th>shard 1</th><th>shard 2</th><th>shard 3</th><th>Final Index on HDFS or S3</th></tr></thead><tbody><tr><td>partition 1</td><td><strong>3645 docs</strong></td><td></td><td></td><td><strong>3645 docs</strong></td></tr><tr><td>partition 2</td><td></td><td><strong>3507 docs</strong></td><td></td><td><strong>3507 docs</strong></td></tr><tr><td>partition 3</td><td></td><td></td><td><strong>3783 docs</strong></td><td><strong>3783 docs</strong></td></tr></tbody></table><p>Doing this manually turns out to be a lot harder than it needs to be for a
 variety of reasons. Elasticsearch embedded server is deprecated, the
 dependencies of spark and Elasticsearch are conflicting, Elasticsearch now
 starts in cluster mode broadcasting his address to his friends, none of these
 are usefull when trying to start one server to index one set of documents then
-throw the instance away.</p>
-
-<h2 id="typeclasses-are-like-interfaces-or-protocols-but-different">Typeclasses are like Interfaces or Protocols but different</h2>
-
-<p>Here is a typeclass that indexes a type <strong>Doc</strong> and returns a type <strong>Res</strong> while
+throw the instance away.</p><h2 id=typeclasses-are-like-interfaces-or-protocols-but-different>Typeclasses are like Interfaces or Protocols but different</h2><p>Here is a typeclass that indexes a type <strong>Doc</strong> and returns a type <strong>Res</strong> while
 using a context <strong>Ctx</strong>, it is not a particularly handsome typeclass but it will
-do the work.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">OfflineIndex</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Ctx</span>, <span style="color:#66d9ef">Res</span>, <span style="color:#66d9ef">Doc</span><span style="color:#f92672">]</span> <span style="color:#a6e22e">extends</span> <span style="color:#a6e22e">Serializable</span> <span style="color:#f92672">{</span>
+do the work.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>trait</span> <span style=color:#a6e22e>OfflineIndex</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Ctx</span>, <span style=color:#66d9ef>Res</span>, <span style=color:#66d9ef>Doc</span><span style=color:#f92672>]</span> <span style=color:#a6e22e>extends</span> <span style=color:#a6e22e>Serializable</span> <span style=color:#f92672>{</span>
 
-  <span style="color:#66d9ef">def</span> partitionContext<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Ctx</span>
+  <span style=color:#66d9ef>def</span> partitionContext<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Ctx</span>
 
-  <span style="color:#66d9ef">def</span> init<span style="color:#f92672">(</span>shards<span style="color:#66d9ef">:</span><span style="color:#66d9ef">OfflineIndexConf</span><span style="color:#f92672">)(</span>tc<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">]</span>
+  <span style=color:#66d9ef>def</span> init<span style=color:#f92672>(</span>shards<span style=color:#66d9ef>:</span><span style=color:#66d9ef>OfflineIndexConf</span><span style=color:#f92672>)(</span>tc<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Task</span><span style=color:#f92672>[</span><span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>]</span>
 
-  <span style="color:#66d9ef">def</span> indices<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span>
+  <span style=color:#66d9ef>def</span> indices<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span>
 
-  <span style="color:#66d9ef">def</span> indexBatch<span style="color:#f92672">(</span>es<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">,</span> c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Ctx</span><span style="color:#f92672">,</span> ts<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Doc</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Res</span>
+  <span style=color:#66d9ef>def</span> indexBatch<span style=color:#f92672>(</span>es<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>,</span> c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Ctx</span><span style=color:#f92672>,</span> ts<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Doc</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Res</span>
 
-<span style="color:#f92672">}</span></code></pre></div>
-<ol>
-<li><strong>partitionContext</strong> allows you to create an object in the <strong>mapPartitions</strong>
+<span style=color:#f92672>}</span></code></pre></div><ol><li><strong>partitionContext</strong> allows you to create an object in the <strong>mapPartitions</strong>
 phase, something that is expensive to build and can then be applied over
-every element of type <strong>Doc</strong></li>
-<li><strong>init</strong> is where creation of indices for the Elasticsearch node takes place</li>
-<li><strong>indices</strong> is the list with every index that needs to be moved to permanent
-storage <strong>hdfs</strong> or <strong>S3</strong></li>
-<li><strong>indexBatch</strong> is where all the actual document indexing happens</li>
-</ol>
-
-<p>It&rsquo;s quite obvious that this setup is harder to understand than <strong>saveToEs</strong> but
+every element of type <strong>Doc</strong></li><li><strong>init</strong> is where creation of indices for the Elasticsearch node takes place</li><li><strong>indices</strong> is the list with every index that needs to be moved to permanent
+storage <strong>hdfs</strong> or <strong>S3</strong></li><li><strong>indexBatch</strong> is where all the actual document indexing happens</li></ol><p>It&rsquo;s quite obvious that this setup is harder to understand than <strong>saveToEs</strong> but
 it avoids havin to create an Elasticsearch cluster and optimize it for indexing
-as well as searching.</p>
+as well as searching.</p><h2 id=simple-implementation-of-an-offlineindex>Simple implementation of an <strong>OfflineIndex</strong></h2><p>Here is an implementation for a simple case class with 2 string fields, it
+relies on the excelent library <a href=https://sksamuel.github.io/elastic4s/>Elastic4s</a></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#75715e>// the case class
+</span><span style=color:#75715e></span><span style=color:#66d9ef>case</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Country</span><span style=color:#f92672>(</span>name<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>,</span> capital<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>String</span><span style=color:#f92672>)</span>
 
-<h2 id="simple-implementation-of-an-offlineindex">Simple implementation of an <strong>OfflineIndex</strong></h2>
+<span style=color:#66d9ef>object</span> <span style=color:#a6e22e>Country</span> <span style=color:#f92672>{</span>
+  <span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>val</span> countryIsOfflineIndex<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>OfflineIndex</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Unit</span>, <span style=color:#66d9ef>BulkResponse</span>, <span style=color:#66d9ef>Country</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>OfflineIndex</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Unit</span>, <span style=color:#66d9ef>BulkResponse</span>, <span style=color:#66d9ef>Country</span><span style=color:#f92672>]</span> <span style=color:#f92672>{</span>
+<span style=color:#75715e>// No context this time
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>def</span> partitionContext<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Unit</span> <span style=color:#f92672>=</span> <span style=color:#f92672>()</span>
 
-<p>Here is an implementation for a simple case class with 2 string fields, it
-relies on the excelent library <a href="https://sksamuel.github.io/elastic4s/">Elastic4s</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// the case class
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Country</span><span style="color:#f92672">(</span>name<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> capital<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
-
-<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Country</span> <span style="color:#f92672">{</span>
-  <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> countryIsOfflineIndex<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">OfflineIndex</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Unit</span>, <span style="color:#66d9ef">BulkResponse</span>, <span style="color:#66d9ef">Country</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OfflineIndex</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Unit</span>, <span style="color:#66d9ef">BulkResponse</span>, <span style="color:#66d9ef">Country</span><span style="color:#f92672">]</span> <span style="color:#f92672">{</span>
-<span style="color:#75715e">// No context this time
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> partitionContext<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">()</span>
-
-    <span style="color:#66d9ef">import</span> com.sksamuel.elastic4s.http.ElasticDsl._
-<span style="color:#75715e">// create the index and raise an error if it doesn&#39;t work
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> init<span style="color:#f92672">(</span>shards<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">OfflineConf</span><span style="color:#f92672">)(</span>tc<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Task</span><span style="color:#f92672">[</span><span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Task</span><span style="color:#f92672">.</span>deferFuture <span style="color:#f92672">{</span>
-      tc<span style="color:#f92672">.</span>execute<span style="color:#f92672">(</span>
-        createIndex<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;places&#34;</span><span style="color:#f92672">).</span>mappings<span style="color:#f92672">(</span>
-          mapping<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;country&#34;</span><span style="color:#f92672">).</span>fields<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span>
-            textField<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">),</span>
-            textField<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;capital&#34;</span><span style="color:#f92672">)</span>
-          <span style="color:#f92672">))))</span>
-    <span style="color:#f92672">}.</span>flatMap <span style="color:#f92672">{</span>
-      <span style="color:#66d9ef">case</span> <span style="color:#66d9ef">_:</span> <span style="color:#66d9ef">RequestSuccess</span><span style="color:#f92672">[</span><span style="color:#66d9ef">CreateIndexResponse</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Task</span><span style="color:#f92672">(</span>tc<span style="color:#f92672">)</span>
-      <span style="color:#66d9ef">case</span> f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">RequestFailure</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">Task</span><span style="color:#f92672">.</span>raiseError<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span><span style="color:#f92672">(</span><span style="color:#e6db74">s&#34;</span><span style="color:#e6db74">${</span>f<span style="color:#f92672">.</span>error<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">))</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#75715e">// list indices to move to permanent storage once indexing is complete
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> indices<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;places&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#75715e">// do the actual work of indexing to elasticsearch
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> indexBatch<span style="color:#f92672">(</span>es<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">ElasticClient</span><span style="color:#f92672">,</span> c<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span><span style="color:#f92672">,</span> ts<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Country</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">BulkResponse</span> <span style="color:#f92672">=</span> es<span style="color:#f92672">.</span>execute<span style="color:#f92672">(</span>
-      bulk<span style="color:#f92672">(</span>ts<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>
-        c <span style="color:#66d9ef">=&gt;</span> indexInto<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;places&#34;</span> <span style="color:#f92672">/</span> <span style="color:#e6db74">&#34;country&#34;</span><span style="color:#f92672">)</span>
-          <span style="color:#f92672">.</span>fields<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#f92672">-&gt;</span> c<span style="color:#f92672">.</span>name<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;capital&#34;</span> <span style="color:#f92672">-&gt;</span> c<span style="color:#f92672">.</span>capital<span style="color:#f92672">)</span>
-      <span style="color:#f92672">))).</span>await<span style="color:#f92672">.</span>result
-  <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div>
-<p>With <strong>OfflineIndex</strong> implemented the next step is to take any
+    <span style=color:#66d9ef>import</span> com.sksamuel.elastic4s.http.ElasticDsl._
+<span style=color:#75715e>// create the index and raise an error if it doesn&#39;t work
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>def</span> init<span style=color:#f92672>(</span>shards<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>OfflineConf</span><span style=color:#f92672>)(</span>tc<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>)</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Task</span><span style=color:#f92672>[</span><span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Task</span><span style=color:#f92672>.</span>deferFuture <span style=color:#f92672>{</span>
+      tc<span style=color:#f92672>.</span>execute<span style=color:#f92672>(</span>
+        createIndex<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;places&#34;</span><span style=color:#f92672>).</span>mappings<span style=color:#f92672>(</span>
+          mapping<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;country&#34;</span><span style=color:#f92672>).</span>fields<span style=color:#f92672>(</span><span style=color:#a6e22e>List</span><span style=color:#f92672>(</span>
+            textField<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;name&#34;</span><span style=color:#f92672>),</span>
+            textField<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;capital&#34;</span><span style=color:#f92672>)</span>
+          <span style=color:#f92672>))))</span>
+    <span style=color:#f92672>}.</span>flatMap <span style=color:#f92672>{</span>
+      <span style=color:#66d9ef>case</span> <span style=color:#66d9ef>_:</span> <span style=color:#66d9ef>RequestSuccess</span><span style=color:#f92672>[</span><span style=color:#66d9ef>CreateIndexResponse</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=&gt;</span> <span style=color:#a6e22e>Task</span><span style=color:#f92672>(</span>tc<span style=color:#f92672>)</span>
+      <span style=color:#66d9ef>case</span> f<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>RequestFailure</span> <span style=color:#f92672>=&gt;</span> <span style=color:#a6e22e>Task</span><span style=color:#f92672>.</span>raiseError<span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>RuntimeException</span><span style=color:#f92672>(</span><span style=color:#e6db74>s&#34;</span><span style=color:#e6db74>${</span>f<span style=color:#f92672>.</span>error<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>))</span>
+    <span style=color:#f92672>}</span>
+<span style=color:#75715e>// list indices to move to permanent storage once indexing is complete
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>def</span> indices<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>]</span> <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Seq</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;places&#34;</span><span style=color:#f92672>)</span>
+<span style=color:#75715e>// do the actual work of indexing to elasticsearch
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>def</span> indexBatch<span style=color:#f92672>(</span>es<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>ElasticClient</span><span style=color:#f92672>,</span> c<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Unit</span><span style=color:#f92672>,</span> ts<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>[</span><span style=color:#66d9ef>Country</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>BulkResponse</span> <span style=color:#f92672>=</span> es<span style=color:#f92672>.</span>execute<span style=color:#f92672>(</span>
+      bulk<span style=color:#f92672>(</span>ts<span style=color:#f92672>.</span>map<span style=color:#f92672>(</span>
+        c <span style=color:#66d9ef>=&gt;</span> indexInto<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;places&#34;</span> <span style=color:#f92672>/</span> <span style=color:#e6db74>&#34;country&#34;</span><span style=color:#f92672>)</span>
+          <span style=color:#f92672>.</span>fields<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;name&#34;</span> <span style=color:#f92672>-&gt;</span> c<span style=color:#f92672>.</span>name<span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;capital&#34;</span> <span style=color:#f92672>-&gt;</span> c<span style=color:#f92672>.</span>capital<span style=color:#f92672>)</span>
+      <span style=color:#f92672>))).</span>await<span style=color:#f92672>.</span>result
+  <span style=color:#f92672>}</span>
+<span style=color:#f92672>}</span></code></pre></div><p>With <strong>OfflineIndex</strong> implemented the next step is to take any
 <strong>Dataset[Country]</strong> and create an Elasticsearch snapshot that can later be loaded
-into a running cluster.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">import</span> offline._
-<span style="color:#66d9ef">import</span> monix.execution.Scheduler
+into a running cluster.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=color:#66d9ef>import</span> offline._
+<span style=color:#66d9ef>import</span> monix.execution.Scheduler
 
-<span style="color:#66d9ef">val</span> countries <span style="color:#66d9ef">=</span> spark<span style="color:#f92672">.</span>read<span style="color:#f92672">.</span>parquet<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;path_to_countries&#34;</span><span style="color:#f92672">).</span>as<span style="color:#f92672">[</span><span style="color:#66d9ef">Country</span><span style="color:#f92672">]</span>
-countries<span style="color:#f92672">.</span>indexPartitionHttp2<span style="color:#f92672">(</span><span style="color:#ae81ff">20</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">URI</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;s3://my_bucket/countriesRepo&#34;</span><span style="color:#f92672">),</span> <span style="color:#a6e22e">OfflineConf</span><span style="color:#f92672">(</span>store <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">64</span><span style="color:#f92672">))</span>
-   <span style="color:#f92672">.</span>cache<span style="color:#f92672">().</span>count <span style="color:#75715e">// count just tell Spark to run the computation, any action will work
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// Now create the snapshot
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> scheduler <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Scheduler</span><span style="color:#f92672">.</span>io<span style="color:#f92672">()</span>
-<span style="color:#a6e22e">EsNode</span><span style="color:#f92672">.</span>renameIndicesAndSnapshot<span style="color:#f92672">(</span>repo<span style="color:#f92672">.</span>toString<span style="color:#f92672">).</span>runSyncUnsafe<span style="color:#f92672">()</span></code></pre></div>
-<h2 id="load-into-elasticsearch-cluster">Load into Elasticsearch cluster</h2>
-
-<p>Once the above gets packaged and executed on in Apache Spark there is a fresh
+<span style=color:#66d9ef>val</span> countries <span style=color:#66d9ef>=</span> spark<span style=color:#f92672>.</span>read<span style=color:#f92672>.</span>parquet<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;path_to_countries&#34;</span><span style=color:#f92672>).</span>as<span style=color:#f92672>[</span><span style=color:#66d9ef>Country</span><span style=color:#f92672>]</span>
+countries<span style=color:#f92672>.</span>indexPartitionHttp2<span style=color:#f92672>(</span><span style=color:#ae81ff>20</span><span style=color:#f92672>,</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>URI</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;s3://my_bucket/countriesRepo&#34;</span><span style=color:#f92672>),</span> <span style=color:#a6e22e>OfflineConf</span><span style=color:#f92672>(</span>store <span style=color:#66d9ef>=</span> <span style=color:#66d9ef>true</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>64</span><span style=color:#f92672>))</span>
+   <span style=color:#f92672>.</span>cache<span style=color:#f92672>().</span>count <span style=color:#75715e>// count just tell Spark to run the computation, any action will work
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>// Now create the snapshot
+</span><span style=color:#75715e></span><span style=color:#66d9ef>implicit</span> <span style=color:#66d9ef>val</span> scheduler <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Scheduler</span><span style=color:#f92672>.</span>io<span style=color:#f92672>()</span>
+<span style=color:#a6e22e>EsNode</span><span style=color:#f92672>.</span>renameIndicesAndSnapshot<span style=color:#f92672>(</span>repo<span style=color:#f92672>.</span>toString<span style=color:#f92672>).</span>runSyncUnsafe<span style=color:#f92672>()</span></code></pre></div><h2 id=load-into-elasticsearch-cluster>Load into Elasticsearch cluster</h2><p>Once the above gets packaged and executed on in Apache Spark there is a fresh
 snapshot waiting in the <strong>s3://my_bucket/countriesRepo</strong>, the guide at Elastic on
-<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html">snapshots</a> is quite extensive but the summary is:</p>
-
-<ol>
-<li><p>Create a snapshot</p>
-
-<p><strong>location</strong> referes to path.repo in the <strong>elasticsearch.yml</strong> file, if it&rsquo;s not relative to that Elasticsearch will not
-load it. This is only an issue if the path is on the local disk, <a href="https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/repository-s3.html">S3</a> repo support is provided as a plugin.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT <span style="color:#e6db74">&#34;localhost:9200/_snapshot/my_backup&#34;</span> -H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> -d<span style="color:#e6db74">&#39;
-</span><span style="color:#e6db74">{
-</span><span style="color:#e6db74">  &#34;type&#34;: &#34;fs&#34;,
-</span><span style="color:#e6db74">  &#34;settings&#34;: {
-</span><span style="color:#e6db74">    &#34;location&#34;: &#34;countries_repo_synced_from_s3&#34;,
-</span><span style="color:#e6db74">    &#34;compress&#34;: false
-</span><span style="color:#e6db74">  }
-</span><span style="color:#e6db74">}
-</span><span style="color:#e6db74">&#39;</span></code></pre></div></li>
-
-<li><p>Sync the snapshot (optional)</p>
-
-<p>You can copy the files generated in <strong>s3://my_bucket/countriesRepo</strong> to a
-separate local path (eg countries_repo_synced_from_s3) relative to <strong>path.repo</strong> or leave them there if the backup location already points to <strong>s3</strong></p></li>
-
-<li><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html#%5Frestore">Restore</a> the snapshot</p>
-
-<p>With everything aligned a simple POST call with the name of the backup and
+<a href=https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html>snapshots</a> is quite extensive but the summary is:</p><ol><li><p>Create a snapshot</p><p><strong>location</strong> referes to path.repo in the <strong>elasticsearch.yml</strong> file, if it&rsquo;s not relative to that Elasticsearch will not
+load it. This is only an issue if the path is on the local disk, <a href=https://www.elastic.co/guide/en/elasticsearch/plugins/7.0/repository-s3.html>S3</a> repo support is provided as a plugin.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -X PUT <span style=color:#e6db74>&#34;localhost:9200/_snapshot/my_backup&#34;</span> -H <span style=color:#e6db74>&#39;Content-Type: application/json&#39;</span> -d<span style=color:#e6db74>&#39;
+</span><span style=color:#e6db74>{
+</span><span style=color:#e6db74>  &#34;type&#34;: &#34;fs&#34;,
+</span><span style=color:#e6db74>  &#34;settings&#34;: {
+</span><span style=color:#e6db74>    &#34;location&#34;: &#34;countries_repo_synced_from_s3&#34;,
+</span><span style=color:#e6db74>    &#34;compress&#34;: false
+</span><span style=color:#e6db74>  }
+</span><span style=color:#e6db74>}
+</span><span style=color:#e6db74>&#39;</span></code></pre></div></li><li><p>Sync the snapshot (optional)</p><p>You can copy the files generated in <strong>s3://my_bucket/countriesRepo</strong> to a
+separate local path (eg countries_repo_synced_from_s3) relative to <strong>path.repo</strong> or leave them there if the backup location already points to <strong>s3</strong></p></li><li><p><a href=https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html#%5Frestore>Restore</a> the snapshot</p><p>With everything aligned a simple POST call with the name of the backup and
 the name of the snapshot restores the indices with the correct number of
-shards and, most important, the data.</p></li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#get the snapshot list</span>
-curl -X GET <span style="color:#e6db74">&#34;localhost:9200/_snapshot/_all&#34;</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#restore snapshot_1</span>
-curl -X POST <span style="color:#e6db74">&#34;localhost:9200/_snapshot/my_backup/snapshot_1/_restore&#34;</span></code></pre></div>
-<p>Assuming you replaced <strong>localhost:9200</strong> with the address of the actual cluster
+shards and, most important, the data.</p></li></ol><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#get the snapshot list</span>
+curl -X GET <span style=color:#e6db74>&#34;localhost:9200/_snapshot/_all&#34;</span></code></pre></div><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#restore snapshot_1</span>
+curl -X POST <span style=color:#e6db74>&#34;localhost:9200/_snapshot/my_backup/snapshot_1/_restore&#34;</span></code></pre></div><p>Assuming you replaced <strong>localhost:9200</strong> with the address of the actual cluster
 you should have the snapshot on S3 restored and all the indices created during
-the Spark job execution.</p>
-
-<h2 id="footnote">Footnote</h2>
-
-<p>There is an example <a href="https://github.com/fabianmurariu/OfflineESIndexGenerator">here</a> that makes this article sort of make sense. It allows
+the Spark job execution.</p><h2 id=footnote>Footnote</h2><p>There is an example <a href=https://github.com/fabianmurariu/OfflineESIndexGenerator>here</a> that makes this article sort of make sense. It allows
 you to create a snapshot from common crawl by passing a list of websites to be
 indexed. It solves all the issues that I encountered while trying to stick
 elasticsearch into apache spark. All you need to do is understand all the
 scripts, change the right parameters, get an AWS account with sufficient
 permissions to run an EMR cluster, find the right parameter in the right script,
 change it to fit your needs, run the job, watch it fail, change more things and
-run it again, then in no time you&rsquo;ll have a snapshot saved in your S3 bucket.</p>
-
-      </div>
-
-      <footer>
-        
-
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-      </div>
-
-      <footer class="footer">
-  <section class="container">
-    
-      <p>robot will code if you have coin</p>
-    
-    
-    
-    
-      
-      [<a href="abcdef123"></a>]
-    
-  </section>
-</footer>
-
-    </main>
-
-    
-
-  </body>
-
-</html>
+run it again, then in no time you&rsquo;ll have a snapshot saved in your S3 bucket.</p></div><footer></footer></article></section></div><footer class=footer><section class=container><p>robot will code if you have coin</p>[<a href=abcdef123></a>]</section></footer></main></body></html>
