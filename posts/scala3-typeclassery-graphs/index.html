@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="coincodebot">
+    <meta name="description" content="coder for hire, drummer">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scala3 typeclassery with graphs"/>
+<meta name="twitter:description" content="Before anything I wrote this thing to see for myself if a typelevel style library for graphs makes any sense. It turns out I LIKE IT! but if you&rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, this comment from Don Syme (the creator of F#) caught my eye and it&rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) NOT WELCOMED!"/>
+
+    <meta property="og:title" content="Scala3 typeclassery with graphs" />
+<meta property="og:description" content="Before anything I wrote this thing to see for myself if a typelevel style library for graphs makes any sense. It turns out I LIKE IT! but if you&rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, this comment from Don Syme (the creator of F#) caught my eye and it&rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) NOT WELCOMED!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-18T18:35:04+01:00" />
+
+
+
+    
+      <base href="https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/">
+    
+    <title>
+  Scala3 typeclassery with graphs · Insert coin
+</title>
+
+    
+      <link rel="canonical" href="https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://fabianmurariu.github.io/css/coder.min.28d751104f30c16da1aa1bb04015cbe662cacfe0d1b01af4f2240ad58580069c.css" integrity="sha256-KNdREE8wwW2hqhuwQBXL5mLKz&#43;DRsBr08iQK1YWABpw=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://fabianmurariu.github.io/css/robot.css" />
+    
+
+    
+    
+    <link rel="icon" type="image/png" href="https://fabianmurariu.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://fabianmurariu.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.88.1" />
+  </head>
+
+  <body class=" ">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://fabianmurariu.github.io">
+      Insert coin
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://fabianmurariu.github.io/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://fabianmurariu.github.io/posts/">Blog</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Scala3 typeclassery with graphs</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2021-09-02T00:00:00Z'>
+                2021-09-02
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              8 minutes read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://fabianmurariu.github.io/categories/graphs/">graphs</a></div>
+
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://fabianmurariu.github.io/tags/scala3/">scala3</a>
+      <span class="separator">•</span>
+    <a href="https://fabianmurariu.github.io/tags/graphs/">graphs</a>
+      <span class="separator">•</span>
+    <a href="https://fabianmurariu.github.io/tags/algorithms/">algorithms</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        <h2 id="before-anything">Before anything</h2>
+<p>I wrote this thing to see for myself if a <strong>typelevel</strong> style library for graphs makes any sense. It turns out <strong>I LIKE IT!</strong> but if you&rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, <a href="https://github.com/fsharp/fslang-suggestions/issues/243#issuecomment-916079347">this</a> comment from Don Syme (the creator of F#) caught my eye and it&rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) <strong>NOT WELCOMED!</strong>. On the other hand Rust and Swift use this design quite successfully without higher kinded types. <a href="https://www.python.org/dev/peps/pep-0544/#generic-protocols">Python</a> now has support for <em>protocols</em> so you might be surprised, if this looks foreign, to find typeclasses adopted more and more.</p>
+<h2 id="let-s-take-a-stab">Let&rsquo;s take a stab</h2>
+<p>This is the gentle kind of graph, that fits in memory and doesn&rsquo;t reach over to disk or over the network and doesn&rsquo;t come home late at night smelling of booze.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Graph0</span><span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span>, <span style="color:#66d9ef">_</span><span style="color:#f92672">]]</span><span style="color:#a6e22e">:</span>
+  extension <span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">](</span>g<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])</span>
+    <span style="color:#66d9ef">def</span> neighbours<span style="color:#f92672">(</span>v<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Iterable</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span>, <span style="color:#66d9ef">V</span><span style="color:#f92672">)]</span>
+    <span style="color:#66d9ef">def</span> vertices<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Iterable</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span><span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">def</span> triplets<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Iterable</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span>, <span style="color:#66d9ef">V</span><span style="color:#f92672">)]</span>
+
+    <span style="color:#66d9ef">def</span> addV<span style="color:#f92672">(</span>v<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">def</span> edge<span style="color:#f92672">(</span>src<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">,</span> e<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">E</span><span style="color:#f92672">,</span> dst<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]</span>
+
+    <span style="color:#66d9ef">def</span> neighboursV<span style="color:#f92672">(</span>v<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Iterable</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span><span style="color:#f92672">]</span> <span style="color:#75715e">// this is derrived from neighbours
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">def</span> empty<span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]</span>
+<span style="color:#75715e">// more and more stuff down here but you get the point
+</span></code></pre></div><h2 id="legal-advice-needed">Legal advice needed</h2>
+<p>This is not a <strong>GUARANTEED 100% TYPECLASS™</strong> since it doesn&rsquo;t have any laws to govern it&rsquo;s behaviour. Sure the function is called <strong>neighbours</strong> but that can return an endless list of triplets with null values, an empty Iterable or anything in between.</p>
+<h3 id="friends-what-are-they-good-for">Friends, what are they good for?</h3>
+<p>Let&rsquo;s write a simple law say called <code>iCanHazFriend</code> where if there is an edge between <code>a</code> and <code>b</code> then <code>b</code> is a neighbour of <code>a</code>. It&rsquo;s a silly law but there you go. You can express this in terms of <code>Graph0</code> as such and it can be used to validate anything that claims to be a Graph with at most 1 edge.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">  <span style="color:#66d9ef">def</span> iCanHazFriend<span style="color:#f92672">[</span><span style="color:#66d9ef">V:Arbitrary</span>, <span style="color:#66d9ef">E:Arbitrary</span>, <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span>, <span style="color:#66d9ef">_</span><span style="color:#f92672">]</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Graph0</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+    forAll <span style="color:#f92672">{</span> <span style="color:#f92672">(</span>triplet<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Triplet</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])</span> <span style="color:#66d9ef">=&gt;</span>
+      <span style="color:#75715e">// insert the triplet in the empty graph
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">val</span> g <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Graph0</span><span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">].</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">].</span>addTriplets<span style="color:#f92672">(</span><span style="color:#a6e22e">Tuple</span><span style="color:#f92672">.</span>fromProductTyped<span style="color:#f92672">(</span>triplet<span style="color:#f92672">))</span>
+
+      <span style="color:#75715e">// call neighbours on the source and check the destination is in the returned list
+</span><span style="color:#75715e"></span>      g<span style="color:#f92672">.</span>neighboursV<span style="color:#f92672">(</span>triplet<span style="color:#f92672">.</span>src<span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>find <span style="color:#f92672">(</span> <span style="color:#66d9ef">_</span> <span style="color:#f92672">==</span> triplet<span style="color:#f92672">.</span>dst <span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>isDefined
+    <span style="color:#f92672">}</span>
+</code></pre></div><h3 id="friends-what-do-they-look-like">Friends, what do they look like?</h3>
+<p>A graph that can guarantee one edge at a time is not the most usefull kind. So let&rsquo;s step-up from there and create a law that verifies we can build paths. we&rsquo;ll call it <code>friendOfAFriend</code> and it will check that if we add a chain of nodes and edges we can reach all of them if we keep calling <code>neighbours</code> starting at the first node.</p>
+<p>We first need a little function that just walks the graph by only looking at the first node in the <code>neighbours</code> list, since we&rsquo;re expecing a path that will do. We&rsquo;ll come back to <code>walk</code> a little later as it holds the key to traversing graphs but for now the simple approach works in our favour.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">
+      <span style="color:#75715e">// start at the first node and keep calling neighbours
+</span><span style="color:#75715e"></span>      <span style="color:#75715e">// only walk onto the first node of any neighbours list
+</span><span style="color:#75715e"></span>      <span style="color:#75715e">// since the graph is directed and we expect it to be a path
+</span><span style="color:#75715e"></span>      <span style="color:#75715e">// we should eventually reach the last node
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">def</span> walk<span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span>, <span style="color:#66d9ef">_</span><span style="color:#f92672">]</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Graph0</span>, <span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">](</span>g<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])(</span>start<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">V</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">LazyList</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+      g<span style="color:#f92672">.</span>neighbours<span style="color:#f92672">(</span>start<span style="color:#f92672">).</span>headOption <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">None</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">LazyList</span><span style="color:#f92672">(</span>start<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">((</span>node<span style="color:#f92672">,</span> <span style="color:#66d9ef">_</span><span style="color:#f92672">,</span> next<span style="color:#f92672">))</span> <span style="color:#66d9ef">=&gt;</span>
+          node <span style="color:#f92672">#</span><span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">walk</span><span style="color:#f92672">(</span><span style="color:#66d9ef">g</span><span style="color:#f92672">)(</span><span style="color:#66d9ef">next</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">}</span>
+</code></pre></div><p>After inserting the path we start at the first node and <strong>KEEP WALKING™</strong>. We expect the result to be all the nodes we inserted.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">  <span style="color:#66d9ef">def</span> friendOfAFriend<span style="color:#f92672">[</span><span style="color:#66d9ef">V:</span> <span style="color:#66d9ef">Arbitrary</span>, <span style="color:#66d9ef">E:</span> <span style="color:#66d9ef">Arbitrary</span>, <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span>, <span style="color:#66d9ef">_</span><span style="color:#f92672">]</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Graph0</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+    forAll <span style="color:#f92672">{</span> <span style="color:#f92672">(</span>path<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Path</span><span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])</span> <span style="color:#66d9ef">=&gt;</span>
+      <span style="color:#75715e">// insert the triplet in the empty graph
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">val</span> g <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Graph0</span><span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">]</span>
+        <span style="color:#f92672">.</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">V</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]</span>
+        <span style="color:#f92672">.</span>addTriplets<span style="color:#f92672">(</span>path<span style="color:#f92672">.</span>ts<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#a6e22e">Tuple</span><span style="color:#f92672">.</span>fromProductTyped<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">))</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">_</span><span style="color:#66d9ef">*</span><span style="color:#f92672">)</span>
+
+      <span style="color:#75715e">// call walk from the first node
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">val</span> actual <span style="color:#66d9ef">=</span> path<span style="color:#f92672">.</span>ts <span style="color:#66d9ef">match</span>
+        <span style="color:#66d9ef">case</span> first <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">_</span> <span style="color:#f92672">=&gt;</span> walk<span style="color:#f92672">(</span>g<span style="color:#f92672">)(</span>first<span style="color:#f92672">.</span>src<span style="color:#f92672">).</span>toVector
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Nil</span>        <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Vector</span><span style="color:#f92672">.</span>empty
+
+      <span style="color:#66d9ef">val</span> expected <span style="color:#66d9ef">=</span> g<span style="color:#f92672">.</span>vertices<span style="color:#f92672">.</span>toVector
+      <span style="color:#75715e">// we should have all the vertices in the end
+</span><span style="color:#75715e"></span>      <span style="color:#e6db74">s&#34;</span><span style="color:#e6db74">$actual</span><span style="color:#e6db74"> != </span><span style="color:#e6db74">$expected</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">|:</span> <span style="color:#f92672">(</span>actual <span style="color:#f92672">==</span> expected<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><p>There are more laws that you can write for this but I&rsquo;m bored so we&rsquo;ll move along.</p>
+<h2 id="to-fold-or-not-to-fold">To fold or not to fold?</h2>
+<p>Our <code>Graph0</code> typeclass seems to be missing an easy way to traverse itself starting from a node. Our simple <code>walk</code> function won&rsquo;t do if we have nodes pointing back at each other or more than 1 child as it will get stuck in a loop or return an incomplete list.</p>
+<p>Furthermore there are a few ways to <code>walk</code> a graph the most popular being <em>depth first</em> and <em>breadth first</em>. They stems from the choice of how you want to proceed once <code>neighbours</code> returns a list of nodes.
+Do you return all the children nodes then proceed with their children <strong>breadth</strong> or you keep calling <code>neighbours</code> on the first node until you get an empty list then make your way back up <strong>depth</strong>.</p>
+<p>In typelevel <a href="https://github.com/typelevel/cats/">cats</a> there is a typeclass called <a href="https://github.com/typelevel/cats/blob/main/core/src/main/scala/cats/Foldable.scala">Foldable</a>, unfortunately <code>Graph</code> doesn&rsquo;t quite have what it takes to act like a foldable, it&rsquo;s missing what List and Vector take for granted: <em>the first item!</em>. And even if it had a first item trying to reach all of the graph from just once place is not always possible in graphs, directed or undirected.</p>
+<p>We&rsquo;re also not going to call it Foldable, instead we&rsquo;re going for the wildly imaginative <code>GraphTraversal</code> on account of not being a Foldable and for clarity purposes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">GraphTraversal</span><span style="color:#f92672">[</span><span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]]</span><span style="color:#a6e22e">:</span>
+  extension <span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">])</span>
+    <span style="color:#66d9ef">def</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">](</span>start<span style="color:#66d9ef">:</span><span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)(</span>acc<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> B<span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span>
+
+    <span style="color:#66d9ef">def</span> collect<span style="color:#f92672">[</span><span style="color:#66d9ef">C1</span><span style="color:#f92672">](</span>from<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> into<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Factory</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">C1</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">C1</span> <span style="color:#f92672">=</span>
+      traversal<span style="color:#f92672">(</span>from<span style="color:#f92672">,</span> into<span style="color:#f92672">.</span>newBuilder<span style="color:#f92672">)((</span>b<span style="color:#f92672">,</span> a<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> b <span style="color:#f92672">+=</span> a<span style="color:#f92672">).</span>result
+</code></pre></div><p>The obviously odd thing is that we seemed to have lost <code>[V, E]</code> along the way, and it&rsquo;s because we&rsquo;re only going to return a <code>GraphTraversal</code> for nodes and ignore edges. Sadly in the attention economy we live in some things had to be cut.</p>
+<p>The less obvious benefit of a <code>GraphTraversal</code> is that we can use any Scala collection with it and obtain whatever instance we want just by calling <code>collect(from = start, into = Vector)</code> or <code>collect(from = start, into = LazyList)</code> this will prove usefull if we want to traverse our graph eagerly or lazily.</p>
+<p>Here&rsquo;s how it looks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">  <span style="color:#66d9ef">def</span> dfs<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">GraphTraversal</span><span style="color:#f92672">[[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=&gt;</span><span style="color:#66d9ef">&gt;</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]]</span> <span style="color:#f92672">{</span>
+    extension <span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>g<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])</span>
+      <span style="color:#66d9ef">def</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">](</span>start<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)(</span>fn<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> B<span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span>
+        <span style="color:#a6e22e">@tailrec</span>
+        <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">(</span>stack<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> seen<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Set</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span>
+          stack <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Nil</span> <span style="color:#66d9ef">=&gt;</span> b
+            <span style="color:#66d9ef">case</span> first <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">rest</span> <span style="color:#f92672">=&gt;</span> <span style="color:#75715e">// (aka. stack.pop)
+</span><span style="color:#75715e"></span>              <span style="color:#66d9ef">val</span> newB <span style="color:#66d9ef">=</span> fn<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> first<span style="color:#f92672">)</span>
+              <span style="color:#66d9ef">val</span> newStack <span style="color:#66d9ef">=</span> g
+                <span style="color:#f92672">.</span>neighboursV<span style="color:#f92672">(</span>first<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span>filterNot<span style="color:#f92672">(</span>seen<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span>foldLeft<span style="color:#f92672">(</span>rest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#f92672">(</span>s<span style="color:#f92672">,</span> child<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> child <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">s</span> <span style="color:#f92672">}</span>
+              loop<span style="color:#f92672">(</span>newStack<span style="color:#f92672">,</span> seen <span style="color:#f92672">+</span> first<span style="color:#f92672">,</span> newB<span style="color:#f92672">)</span>
+          <span style="color:#f92672">}</span>
+
+        loop<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span>start<span style="color:#f92672">),</span> <span style="color:#a6e22e">Set</span><span style="color:#f92672">(</span>start<span style="color:#f92672">),</span> b<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+</code></pre></div><p>Honestly <code>GraphTraversal</code> could be a bit simpler and the type lambda <code>[A] =&gt;&gt; G[A, E]</code> is excessive but the title is <em>Scala3 typeclassery with graphs</em> not <em>sensible approach to graphs</em> so that&rsquo;s what you get.</p>
+<p>If you&rsquo;ve never seen a dfs traversal before then go <a href="https://en.wikipedia.org/wiki/Graph%5Ftraversal#Depth-first%5Fsearch">here</a>. This looks more like the BFS loop if you scroll down the wikipedia page. That&rsquo;s because most DFS textbook implementations use recursion but here we use a <code>List</code> as a stack to avoid recursion, even if we use a tail recursive loop for extra <strong>PURITY™</strong>.</p>
+<p>Here is the story:
+There once was a loop with a stack of nodes, a working memory of all the nodes it had seen and an accumulator calling itself Mr <code>b</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">        <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">(</span>stack<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> seen<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Set</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span>
+</code></pre></div><p>And every time it went around it checked if the node on top of the stack had children that it had never encountered before and if it did it promptly added all of them on top of the stack. Before anything tho it made sure the accumulator (Mr <code>b</code>) was informed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">    <span style="color:#66d9ef">case</span> first <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">rest</span> <span style="color:#f92672">=&gt;</span>
+        <span style="color:#66d9ef">val</span> newB <span style="color:#66d9ef">=</span> fn<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> first<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">val</span> newStack <span style="color:#66d9ef">=</span> g
+        <span style="color:#f92672">.</span>neighboursV<span style="color:#f92672">(</span>first<span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>filterNot<span style="color:#f92672">(</span>seen<span style="color:#f92672">)</span>
+        <span style="color:#f92672">.</span>foldLeft<span style="color:#f92672">(</span>rest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#f92672">(</span>s<span style="color:#f92672">,</span> child<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> child <span style="color:#66d9ef">:</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">s</span> <span style="color:#f92672">}</span>
+</code></pre></div><p>This went on until the stack was empty and Mr <code>b</code> was pleased with the result and out the door.</p>
+<p>If you don&rsquo;t like my storrytelling I dont blame you let&rsquo;s move on on how we put this to good use. The <code>friendOfAFriend</code> law becomes free of the <code>walk</code> function and uses collect instead to lift every node we encouter along the traversal in a Vector</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#75715e">// instead of walk(g)(first.src).toVector we have
+</span><span style="color:#75715e"></span>          <span style="color:#a6e22e">Graph0</span><span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">].</span>dfs<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span><span style="color:#f92672">].</span>collect<span style="color:#f92672">(</span>g<span style="color:#f92672">)(</span>from <span style="color:#66d9ef">=</span> first<span style="color:#f92672">.</span>src<span style="color:#f92672">,</span> into <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Vector</span><span style="color:#f92672">)</span>
+</code></pre></div><h2 id="just-one-more-thing--if-you-made-it-this-far">Just one more thing (if you made it this far)</h2>
+<p>It turns out the traversal code for bfs and dfs is identical and we can get them both in one swoop if we abstract over the <code>stack</code> with .. you guessed it <em>another typeclass</em>. There is a structure that can act like a stack and a queue called <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Deque.html">Deque</a> but we&rsquo;re not going to call it that.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">TraversalSupport</span><span style="color:#f92672">[</span><span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]]</span><span style="color:#a6e22e">:</span>
+  extension <span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>f<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">])</span>
+    <span style="color:#66d9ef">def</span> take<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Option</span><span style="color:#f92672">[(</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">])]</span>
+    <span style="color:#66d9ef">def</span> offer<span style="color:#f92672">(</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">def</span> from<span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>a<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span>
+</code></pre></div><p>Our lonley <code>dfs</code> function gets to be a specific case of graph traversal where the support data structure is a <code>List</code> while bfs follows the same pattern but uses a <code>Queue</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala">  <span style="color:#66d9ef">def</span> dfs<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span>, <span style="color:#66d9ef">List</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">def</span> bfs<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span>, <span style="color:#66d9ef">Queue</span><span style="color:#f92672">]</span>
+
+  <span style="color:#66d9ef">def</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">E</span>, <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span><span style="color:#f92672">]</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">TraversalSupport</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">GraphTraversal</span><span style="color:#f92672">[[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=&gt;</span><span style="color:#66d9ef">&gt;</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">]]</span> <span style="color:#f92672">{</span>
+      extension <span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">](</span>g<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span>, <span style="color:#66d9ef">E</span><span style="color:#f92672">])</span>
+        <span style="color:#66d9ef">def</span> traversal<span style="color:#f92672">[</span><span style="color:#66d9ef">B</span><span style="color:#f92672">](</span>start<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">,</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)(</span>fn<span style="color:#66d9ef">:</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">B</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">A</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> B<span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span>
+          <span style="color:#a6e22e">@tailrec</span>
+          <span style="color:#66d9ef">def</span> loop<span style="color:#f92672">(</span>stack<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">F</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> seen<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Set</span><span style="color:#f92672">[</span><span style="color:#66d9ef">A</span><span style="color:#f92672">],</span> b<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">B</span> <span style="color:#f92672">=</span>
+            stack<span style="color:#f92672">.</span>take <span style="color:#66d9ef">match</span> <span style="color:#f92672">{</span>
+              <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">None</span> <span style="color:#66d9ef">=&gt;</span> b
+              <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">((</span>first<span style="color:#f92672">,</span> rest<span style="color:#f92672">))</span> <span style="color:#66d9ef">=&gt;</span> <span style="color:#75715e">// in other words stack.pop
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">val</span> newB <span style="color:#66d9ef">=</span> fn<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span> first<span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">val</span> newStack <span style="color:#66d9ef">=</span> g
+                  <span style="color:#f92672">.</span>neighboursV<span style="color:#f92672">(</span>first<span style="color:#f92672">)</span>
+                  <span style="color:#f92672">.</span>filterNot<span style="color:#f92672">(</span>seen<span style="color:#f92672">)</span>
+                  <span style="color:#f92672">.</span>foldLeft<span style="color:#f92672">(</span>rest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#f92672">(</span>s<span style="color:#f92672">,</span> child<span style="color:#f92672">)</span> <span style="color:#66d9ef">=&gt;</span> s<span style="color:#f92672">.</span>offer<span style="color:#f92672">(</span>child<span style="color:#f92672">)</span> <span style="color:#f92672">}</span>
+                loop<span style="color:#f92672">(</span>newStack<span style="color:#f92672">,</span> seen <span style="color:#f92672">+</span> first<span style="color:#f92672">,</span> newB<span style="color:#f92672">)</span>
+            <span style="color:#f92672">}</span>
+
+          loop<span style="color:#f92672">(</span><span style="color:#a6e22e">TraversalSupport</span><span style="color:#f92672">[</span><span style="color:#66d9ef">F</span><span style="color:#f92672">].</span>from<span style="color:#f92672">(</span>start<span style="color:#f92672">),</span> <span style="color:#a6e22e">Set</span><span style="color:#f92672">(</span>start<span style="color:#f92672">),</span> b<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div>
+      </div>
+
+      <footer>
+        
+
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>robot will code if you have coin</p>
+    
+    
+    
+    
+      
+      [<a href="abcdef123"></a>]
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

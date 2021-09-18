@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Insert coin</title><link>https://fabianmurariu.github.io/</link><description>Recent content on Insert coin</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 03 Jun 2019 00:00:00 +0100</lastBuildDate><atom:link href="https://fabianmurariu.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://fabianmurariu.github.io/about/</link><pubDate>Sun, 02 Jun 2019 17:37:56 +0100</pubDate><guid>https://fabianmurariu.github.io/about/</guid><description>I&amp;rsquo;m a software developer for hire, sometimes refered to as a contractor. I specialize in big data but will happily work on microservices. I don&amp;rsquo;t do UI and unless you use re-frame you shouldn&amp;rsquo;t either.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Insert coin</title>
+    <link>https://fabianmurariu.github.io/</link>
+    <description>Recent content on Insert coin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 02 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fabianmurariu.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://fabianmurariu.github.io/about/</link>
+      <pubDate>Sun, 02 Jun 2019 17:37:56 +0100</pubDate>
+      
+      <guid>https://fabianmurariu.github.io/about/</guid>
+      <description>I&amp;rsquo;m a software developer for hire, sometimes refered to as a contractor. I specialize in big data but will happily work on microservices. I don&amp;rsquo;t do UI and unless you use re-frame you shouldn&amp;rsquo;t either.
 Currently I&amp;rsquo;m fighting financial crime @ Quantexa
-This blog is written in emacs + ox-hugo</description></item><item><title>Contact</title><link>https://fabianmurariu.github.io/contact/</link><pubDate>Sun, 02 Jun 2019 17:41:04 +0100</pubDate><guid>https://fabianmurariu.github.io/contact/</guid><description>@coincodebot</description></item><item><title>Index Common Crawl with Elasticsearch without a running cluster</title><link>https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/</link><pubDate>Mon, 03 Jun 2019 00:00:00 +0100</pubDate><guid>https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/</guid><description>Common Crawl is an amazing project I&amp;rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&amp;rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
-The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page.</description></item><item><title>Projects</title><link>https://fabianmurariu.github.io/projects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://fabianmurariu.github.io/projects/</guid><description>Nothing to see here&amp;hellip; Move along!</description></item></channel></rss>
+This blog is written in emacs + ox-hugo</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>https://fabianmurariu.github.io/contact/</link>
+      <pubDate>Sun, 02 Jun 2019 17:41:04 +0100</pubDate>
+      
+      <guid>https://fabianmurariu.github.io/contact/</guid>
+      <description>@coincodebot</description>
+    </item>
+    
+    <item>
+      <title>Scala3 typeclassery with graphs</title>
+      <link>https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/</link>
+      <pubDate>Thu, 02 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/</guid>
+      <description>Before anything I wrote this thing to see for myself if a typelevel style library for graphs makes any sense. It turns out I LIKE IT! but if you&amp;rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, this comment from Don Syme (the creator of F#) caught my eye and it&amp;rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) NOT WELCOMED!</description>
+    </item>
+    
+    <item>
+      <title>Index Common Crawl with Elasticsearch without a running cluster</title>
+      <link>https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/</link>
+      <pubDate>Mon, 03 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fabianmurariu.github.io/posts/offline-cc-index-spark-elastic/</guid>
+      <description>Common Crawl is an amazing project I&amp;rsquo;m always surprised when people I talk to are unfamiliar with Common Crawl, it&amp;rsquo;s one of the most surprising and empowering projects in a world where governments and corporations seem hell bent on taking power away from us.
+The projects is host to 8 year of web data grouped in 3 main categories: raw web page, metadata extracts and text extracts with derivative work such as a file index as well as a link graph with ranking for top domains and every page.</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://fabianmurariu.github.io/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://fabianmurariu.github.io/projects/</guid>
+      <description>Nothing to see here&amp;hellip; Move along!</description>
+    </item>
+    
+  </channel>
+</rss>
