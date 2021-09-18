@@ -18,7 +18,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-09-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-18T18:35:04+01:00" />
+<meta property="article:modified_time" content="2021-09-18T18:57:31+01:00" />
 
 
 
@@ -124,7 +124,7 @@
 
       <div>
         <h2 id="before-anything">Before anything</h2>
-<p>I wrote this thing to see for myself if a <strong>typelevel</strong> style library for graphs makes any sense. It turns out <strong>I LIKE IT!</strong> but if you&rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, <a href="https://github.com/fsharp/fslang-suggestions/issues/243#issuecomment-916079347">this</a> comment from Don Syme (the creator of F#) caught my eye and it&rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) <strong>NOT WELCOMED!</strong>. On the other hand Rust and Swift use this design quite successfully without higher kinded types. <a href="https://www.python.org/dev/peps/pep-0544/#generic-protocols">Python</a> now has support for <em>protocols</em> so you might be surprised, if this looks foreign, to find typeclasses adopted more and more.</p>
+<p>I wrote this thing to see for myself if a <strong>typelevel</strong> style library for graphs makes any sense. It turns out <strong>I LIKE IT!</strong> but if you&rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, <a href="https://github.com/fsharp/fslang-suggestions/issues/243#issuecomment-916079347">this</a> comment from Don Syme (the creator of F#) caught my eye and it&rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) <strong>NOT WELCOMED!</strong>. On the other hand Rust and Swift use this design quite successfully without higher kinded types. <a href="https://www.python.org/dev/peps/pep-0544/#generic-protocols">Python</a> now has support for <em>protocols</em> so you might be surprised, if this looks foreign, to find typeclasses adopted more and more. Supporting code is <a href="https://github.com/fabianmurariu/graphs">here</a>.</p>
 <h2 id="let-s-take-a-stab">Let&rsquo;s take a stab</h2>
 <p>This is the gentle kind of graph, that fits in memory and doesn&rsquo;t reach over to disk or over the network and doesn&rsquo;t come home late at night smelling of booze.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">trait</span> <span style="color:#a6e22e">Graph0</span><span style="color:#f92672">[</span><span style="color:#66d9ef">G</span><span style="color:#f92672">[</span><span style="color:#66d9ef">_</span>, <span style="color:#66d9ef">_</span><span style="color:#f92672">]]</span><span style="color:#a6e22e">:</span>
