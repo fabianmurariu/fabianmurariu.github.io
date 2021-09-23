@@ -13,7 +13,7 @@
       <pubDate>Thu, 02 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fabianmurariu.github.io/posts/scala3-typeclassery-graphs/</guid>
-      <description>Before anything I wrote this thing to see for myself if a typelevel style library for graphs makes any sense. It turns out I LIKE IT! but if you&amp;rsquo;re coming from Python, Java, Go or Kotlin you migh will find it odd. In fact even typeclasses themselves are quite controversial, this comment from Don Syme (the creator of F#) caught my eye and it&amp;rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are (to put it mildly) NOT WELCOMED!</description>
+      <description>Before anything I wrote this thing to see for myself if a typelevel style library for graphs makes any sense. It turns out I LIKE IT! but if you&amp;rsquo;re coming from Python, Java, Go or Kotlin you may will find it odd. In fact even typeclasses themselves are quite controversial, this comment from Don Syme (the creator of F#) caught my eye and it&amp;rsquo;s interesting to see that even in a functional and strongly typed language such as F# typeclasses are, to put it mildly, NOT WELCOMED!</description>
     </item>
     
     <item>
